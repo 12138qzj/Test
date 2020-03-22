@@ -7,11 +7,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-
+import org.altertable.DeleteColllectionData;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.ov.HibernateSessionFactory;
+import org.table.Collection;
 import org.table.Gorder;
 
 import net.sf.json.JSONArray;
@@ -65,12 +66,50 @@ public class DateBase_Addtable {
 					System.out.println("修改ABC中的数据失败");
 				}
 				//删除
-			}
-			
+			}			
 		}catch(Exception e){
 			System.out.println(e);
 			return false;
 		}		
 		return true;
+	}
+	
+public Boolean AddCollection(JSONObject jsondate) {
+		Session session=HibernateSessionFactory.getSession();		
+		System.out.println("在这1修改Collection");		
+		session.clear();
+		Transaction tran=session.beginTransaction();
+		
+		Query query=null;
+		query=session.createQuery("from Collection where userId='"+
+		jsondate.getString("userId")+"' and gymnasiumId='"+jsondate.getString("gymnasiumId")+"'");
+		System.out.println(query);
+		System.out.println(query.list().size());
+		if(query.list().size()!=0){
+			System.out.println("存在");
+			tran.commit();
+			session.close();
+			return DeleteColllectionData.DeleteColllectionData(jsondate);			
+		}else {	
+			try {			
+				Collection collection=null;
+				collection=new Collection();
+				//gorder.setOid(5);
+				System.out.println("存在数据："+jsondate.getString("userId"));
+				collection.setUserId(jsondate.getString("userId"));
+				collection.setGymnasiumId(jsondate.getString("gymnasiumId"));			
+				session.save(collection);
+				tran.commit();
+				session.close();					
+			}catch(Exception e){
+				System.out.println(e);
+				System.out.println("在这1添加Collection失败");
+				return false;
+				
+			}
+			System.out.println("在这1添加Collection成功");
+			return true;
+		}
+		
 	}
 }

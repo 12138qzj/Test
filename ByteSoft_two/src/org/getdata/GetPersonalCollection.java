@@ -1,23 +1,17 @@
 package org.getdata;
 
-
-/*
- * 未使用此功能
- * */
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.Json.Json;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 import DateBase.DateBase_Gettable;
-import DateBase.DateBase_Login;
-import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 
-public class Getgymnasium implements Controller{
+public class GetPersonalCollection implements Controller{
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -25,6 +19,9 @@ public class Getgymnasium implements Controller{
 		System.out.println("登入的web服务,登入服务");
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+		
+		JSONArray jsonArr=null;
+		
 		String Method=request.getMethod();
 		/**
 		 * 获取输出流，用来放回登入的报文
@@ -36,19 +33,31 @@ public class Getgymnasium implements Controller{
 		if(true/*"POST".equals(Method)*/)  {
 			System.out.println("------POST的方法进入------");
 			String read=""; //解析的Json报文
-			//DateBase_Gettable gymnasium=new DateBase_Gettable();
+			DateBase_Gettable getcollection=new DateBase_Gettable();
 			//read=Json.SetJson(request.getReader());
 	       // JSONObject json = JSONObject.fromObject(read);
 	        //System.out.println("App端的Json数据"+json);
 	        //String num=json.getString("num");
-			String num="201720180321";
-	        if(DateBase_Gettable.getGymnasium(num)!=null) {
+			String userid="18879942330";
+	        if(getcollection.getCollection(userid)!=null) {
+	        	jsonArr=new JSONArray();
 	        	/*
 	        	 * 返回获取的场馆信息*/
-	        	System.out.println("场馆表中的内容为:"+DateBase_Gettable.getGymnasium(num));
-	        	response.getWriter().append(DateBase_Gettable.getGymnasium(num).toString());	
+	        	System.out.println("场馆表中的内容为:"+getcollection.getCollection(userid));
+	        	for(int i=0;i<getcollection.getCollection(userid).size();i++) {
+	        		System.out.println("id为："+DateBase_Gettable.getGymnasium(getcollection
+	        				.getCollection(userid)
+	        				.get(i)
+	        				.toString()));
+	        		
+	        		 jsonArr.add(DateBase_Gettable.getGymnasium(getcollection
+		        				.getCollection(userid)
+		        				.get(i)
+		        				.toString()));
+	        	}
+	        	
 	        }
-	        
+	        response.getWriter().append(jsonArr.toString());	 
 	        
 		}else {
 			System.out.println("------GET的方法进入------");
