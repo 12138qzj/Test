@@ -1,23 +1,16 @@
 package org.getdata;
 
-
-/*
- * 未使用此功能
- * */
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.Json.Json;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 import DateBase.DateBase_Gettable;
-import DateBase.DateBase_Login;
-import net.sf.json.JSONObject;
 
-public class Getgymnasium implements Controller{
+public class Getgame implements Controller{
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -33,20 +26,14 @@ public class Getgymnasium implements Controller{
 		        
 		System.out.println("数据请求的方法："+Method);
 		
-		if("POST".equals(Method.toString()))  {
+		if(true/*"POST".equals(Method)*/)  {
 			System.out.println("------POST的方法进入------");
-			String read=""; //解析的Json报文
-			//DateBase_Gettable gymnasium=new DateBase_Gettable();
-			//read=Json.SetJson(request.getReader());
-	       // JSONObject json = JSONObject.fromObject(read);
-	        //System.out.println("App端的Json数据"+json);
-	        //String num=json.getString("num");
-			String num="201720180321";
-	        if(DateBase_Gettable.getGymnasium(num)!=null) {
+			
+	        if(DateBase_Gettable.getGame()!=null) {
 	        	/*
 	        	 * 返回获取的场馆信息*/
-	        	System.out.println("场馆表中的内容为:"+DateBase_Gettable.getGymnasium(num));
-	        	response.getWriter().append(DateBase_Gettable.getGymnasium(num).toString());	
+	        	System.out.println("比赛表中的内容为:"+DateBase_Gettable.getGame());
+	        	response.getWriter().append(DateBase_Gettable.getGame().toString());	
 	        }
 	        
 	        

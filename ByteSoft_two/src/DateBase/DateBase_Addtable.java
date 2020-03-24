@@ -14,6 +14,8 @@ import org.hibernate.Transaction;
 import org.ov.HibernateSessionFactory;
 import org.table.Collection;
 import org.table.Gorder;
+import org.table.Login;
+import org.table.Userinfo;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -111,5 +113,38 @@ public Boolean AddCollection(JSONObject jsondate) {
 			return true;
 		}
 		
+	}
+	public  static Boolean AddUserinfo(String Account) {
+		Session session=HibernateSessionFactory.getSession();		
+		System.out.println("在这DataBase中修改userinfo");		
+		session.clear();
+		Transaction tran=session.beginTransaction();
+		Userinfo userinfo=new Userinfo();
+
+		if((userinfo=(Userinfo)session.get(Userinfo.class, Account))!=null) {
+			System.out.println("账号以存在");
+			session.close();
+			userinfo=null;
+			return false;
+		}else {
+
+			try {			
+//				Collection collection=null;
+//				collection=new Collection();
+				//gorder.setOid(5);
+				System.out.println("不存在数据!");
+				userinfo.setAccount(Account);
+				userinfo.setLevels(0);		
+				session.save(userinfo);
+				tran.commit();
+				session.close();					
+			}catch(Exception e){
+				System.out.println(e);
+				System.out.println("在这1添加userinfo失败");
+				return false;			
+			}
+			System.out.println("在这1添加userinfo成功");
+			return true;
+		}
 	}
 }

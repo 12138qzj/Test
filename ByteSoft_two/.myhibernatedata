@@ -1,11 +1,11 @@
 #MyEclipse Hibernate Properties
-#Sun Mar 22 19:48:47 CST 2020
+#Tue Mar 24 21:29:22 CST 2020
 reStrategyClass=
 detectM2M=false
 createConfigFile=true
 reSettingsFile=/ByteSoft_two/hibernate.reveng.xml
 profile=
-keyGenerator=native
+keyGenerator=assigned
 genAnnotations=false
 detectO2O=false
 useJavaTypes=true

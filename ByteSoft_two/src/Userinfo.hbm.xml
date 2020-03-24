@@ -11,7 +11,7 @@
             <generator class="assigned" />
         </id>
         <property name="navheader" type="java.lang.String">
-            <column name="Navheader" length="50" not-null="true" />
+            <column name="Navheader" length="50" />
         </property>
         <property name="nickname" type="java.lang.String">
             <column name="Nickname" length="16" not-null="true" />

@@ -1,4 +1,4 @@
-package org.table;
+
 
 import java.util.Date;
 
@@ -28,9 +28,8 @@ public class Userinfo implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Userinfo(String account, String navheader, String nickname, Integer levels) {
+	public Userinfo(String account, String nickname, Integer levels) {
 		this.account = account;
-		this.navheader = navheader;
 		this.nickname = nickname;
 		this.levels = levels;
 	}
