@@ -24,6 +24,7 @@
 	<bean class="org.getdata.Getgamedetails" name="/Getgamedetails"/>
 	<bean class="org.adddata.AddGorderData" name="/AddGorderData"/>
 	<bean class="org.adddata.AddCollection" name="/AddCollection"/>
+	<bean class="org.adddata.AddJoinGame" name="/AddJoinGame"/>
 	<bean class="org.altertable.Alterorder" name="/Alterorder"/>
 
 </beans>

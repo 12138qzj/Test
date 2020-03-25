@@ -34,6 +34,7 @@
 		<mapping resource="org/table/Collection.hbm.xml" />
 		<mapping resource="org/table/Game.hbm.xml" />
 		<mapping resource="org/table/Gamedetails.hbm.xml" />
+		<mapping resource="org/table/Joingame.hbm.xml" />
 
 
 	</session-factory>

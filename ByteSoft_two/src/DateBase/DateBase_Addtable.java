@@ -14,6 +14,7 @@ import org.hibernate.Transaction;
 import org.ov.HibernateSessionFactory;
 import org.table.Collection;
 import org.table.Gorder;
+import org.table.Joingame;
 import org.table.Login;
 import org.table.Userinfo;
 
@@ -146,5 +147,47 @@ public Boolean AddCollection(JSONObject jsondate) {
 			System.out.println("在这1添加userinfo成功");
 			return true;
 		}
+	}
+	
+	public Boolean AddJoinGame(JSONObject jsondate) {
+		Session session=HibernateSessionFactory.getSession();		
+		System.out.println("在这1修改Joingame");		
+		session.clear();
+		Transaction tran=session.beginTransaction();
+		
+		Query query=null;
+		query=session.createQuery("from Joingame where userName='"+
+		jsondate.getString("userName")+"' and userPhone='"+jsondate.getString("userPhone")+"'");
+		System.out.println(query);
+		System.out.println(query.list().size());
+		if(query.list().size()!=0){
+			System.out.println("存在");
+			tran.commit();
+			session.close();
+			return false;			
+		}else {	
+			try {			
+				Joingame joingame=null;
+				joingame=new Joingame();
+				//gorder.setOid(5);
+				
+				joingame.setUserName(jsondate.getString("userName"));
+				joingame.setUserPhone(jsondate.getString("userPhone"));
+				joingame.setGamePlace(jsondate.getString("gamePlace"));				
+				joingame.setGameName(jsondate.getString("gameName"));
+				joingame.setGameType(jsondate.getString("gameType"));
+					
+				session.save(joingame);
+				tran.commit();
+				session.close();					
+			}catch(Exception e){
+				System.out.println(e);
+				System.out.println("在这1添加joingame失败");
+				return false;				
+			}
+			System.out.println("在这1添加joingame成功");
+			return true;
+		}
+		
 	}
 }
