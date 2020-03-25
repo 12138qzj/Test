@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yexin.menu6.Common.Public_class.UserPublic;
+import com.example.yexin.menu6.Common.Refresh.RefreshDialog;
 import com.example.yexin.menu6.Common.Url.Web_url;
 import com.example.yexin.menu6.Index.MainActivity;
 import com.example.yexin.menu6.Index.main_stadiums;
@@ -49,6 +51,11 @@ public class fragmenttwo_balls_details extends Activity {
     private String phone;
     private JSONArray jsonArr;
     private JSONObject jsonObject=null;
+
+    private RefreshDialog refreshDialog;
+    private int Refresh_status=2;
+    private final int Refresh_Success=1;
+    private final int Refresh_Fail=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +99,7 @@ public class fragmenttwo_balls_details extends Activity {
             e.printStackTrace();
         }
     }
-    public void http(String URL, final JSONObject jsonObjecthttp){
+    public void http(final String URL, final JSONObject jsonObjecthttp){
 
         RequestParams params = new RequestParams(URL);
         params.addHeader("Content-Type", "application/json-rpc"); //设置请求头部
@@ -108,7 +115,10 @@ public class fragmenttwo_balls_details extends Activity {
                 Log.e("yjqresult:",result.toString());
                 Log.e("yjqresult:","长度："+result.length());
                 if(result!=null){
-                    AddData(result);
+                    if(Web_url.URL_Getgamedetails.equals(URL)){
+                        AddData(result);
+                    }else if(Web_url.URL_AddJoinGame.equals(URL))
+                        Log.e("addjoingame","结果："+result);
                 }
 
             }
@@ -123,6 +133,7 @@ public class fragmenttwo_balls_details extends Activity {
             @Override
             public void onFinished() {
                 Log.e("yjq","完成");
+                refreshDialog.dismiss();
                 //完成时候运行
             }
         });
@@ -205,13 +216,16 @@ public class fragmenttwo_balls_details extends Activity {
                 try{
                     jsonObject=new JSONObject();
                     /*添加报名信息*/
-                    jsonObject.put("phone","18879942330");
-                    jsonObject.put("name","邱在杰");
-                    jsonObject.put("object","报名项目");
+                    jsonObject.put("userPhone", UserPublic.getUser());
+                    jsonObject.put("userName","邱在杰");
+                    jsonObject.put("gamePlace","比赛地方");
+                    jsonObject.put("gameName","比赛名字");
+                    jsonObject.put("gameType","比赛类型");
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-                //http(Web_url.URL_URL_Joingame,jsonObject); //网络请求
+                refreshContent(Web_url.URL_AddJoinGame,jsonObject);
+                //http(Web_url.URL_AddJoinGame,jsonObject); //网络请求
                 break;
 
             //组团报名
@@ -249,5 +263,25 @@ public class fragmenttwo_balls_details extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private void refreshContent(final String url,final JSONObject data) {
+        refreshDialog = new RefreshDialog(fragmenttwo_balls_details.this,"正在提交...",R.mipmap.ic_dialog_loading);
+        refreshDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    http(url,data);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                (fragmenttwo_balls_details.this).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //在之中可以终止线程
+                    }
+                });
+            }
+        }).start();
     }
 }

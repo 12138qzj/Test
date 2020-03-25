@@ -37,5 +37,5 @@ public  class Web_url {
     public static String URL_AddGorderData="http://192.168.137.1:8080/ByteSoft_two/AddGorderData";
     public static String URL_AddCollection="http://192.168.137.1:8080/ByteSoft_two/AddCollection";
     public static String URL_URL_Alterorder="http://192.168.137.1:8080/ByteSoft_two/Alterorder";
-    public static String URL_URL_Joingame="http://192.168.137.1:8080/ByteSoft_two/Joingame";
+    public static String URL_AddJoinGame="http://192.168.137.1:8080/ByteSoft_two/AddJoinGame";
 }

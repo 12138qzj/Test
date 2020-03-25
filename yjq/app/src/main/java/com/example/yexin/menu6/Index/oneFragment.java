@@ -153,10 +153,18 @@ public class oneFragment extends android.support.v4.app.Fragment implements OnBa
     }
 
     private void http(){
+        Log.e("one","网络请求中用户id:"+UserPublic.getUser());
+
         RequestParams params = new RequestParams(Web_url.URL_Getmainactivity);
         params.addHeader("Content-Type", "application/json-rpc"); //设置请求头部
         params.setAsJsonContent(true);//设置为json内容(这句个本人感觉不加也没有影响)
-        //  params.setBodyContent(jsonObject);//添加json内容到请求参数里
+//        try {
+//            jsonObject=new JSONObject();
+//            jsonObject.put("userid",UserPublic.getUser());
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//       params.setBodyContent(jsonObject.toString());//添加json内容到请求参数里
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

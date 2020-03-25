@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.yexin.menu6.Common.Json.Web_Json;
 import com.example.yexin.menu6.Common.Public_class.UserPublic;
 import com.example.yexin.menu6.Common.Public_class.User_public;
+import com.example.yexin.menu6.Common.Refresh.RefreshDialog;
 import com.example.yexin.menu6.Common.Url.Web_url;
 import com.example.yexin.menu6.Index.MainActivity;
 import com.example.yexin.menu6.R;
@@ -40,9 +41,14 @@ public class Login extends Activity {
     private EditText text_username;
     private EditText text_password;
     private Button button_submit;
-    private String UserName=null;
+    private String UserId=null;
     private String UserPassword=null;
     private User_public user_public=null;
+
+    private RefreshDialog refreshDialog;
+    private int Refresh_status=2;
+    private final int Refresh_Success=1;
+    private final int Refresh_Fail=0;
 
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_SMS,Manifest.permission.CAMERA,Manifest.permission.CALL_PHONE})
     public void getSingle() {
@@ -85,16 +91,16 @@ public class Login extends Activity {
         button_submit=(Button)findViewById(R.id.btn_login);
         button_submit.setOnClickListener(new View.OnClickListener(){
             @Override
-
             public void onClick(View v) {
+                refreshContent();
                 if (!TextUtils.isEmpty(text_username.getText().toString())&& !TextUtils.isEmpty(text_password.getText().toString())) {
                     Log.e("WangJ", "都不空");
-                    UserName = text_username.getText().toString();
+                    UserId= text_username.getText().toString();
                     UserPassword = text_password.getText().toString();
                     /**
                      * 点击登入，账号密码都不为空的时候，发起网络请求
                      */
-                    String jsonObject = Web_Json.Login(UserName, UserPassword);
+                    String jsonObject = Web_Json.Login(UserId, UserPassword);
                     RequestParams params = new RequestParams(Web_url.URL_Login);
                     params.addHeader("Content-Type", "application/json-rpc"); //设置请求头部
                     params.setAsJsonContent(true);//设置为json内容(这句个本人感觉不加也没有影响)
@@ -106,10 +112,12 @@ public class Login extends Activity {
                             Log.e("yjq", "网络请求成功" + result);  //接收JSON的字符串
 //               HashMap<String,String> map=Web_Json.getJson(result);
                             HashMap<String, String> map = Web_Json.getJson(result);
+
+
                             user_public.setUser_flag(true);
                             UserPublic.setUser_flag(true);
-                            user_public.setUser(UserName);
-                            UserPublic.setUser(UserName);
+                            user_public.setUser(UserId);
+                            UserPublic.setUser(UserId);
                             user_public.setUser_str(map.get("token"));
                             UserPublic.setUser_str(map.get("token"));
                             user_public.setIcon(map.get("Picture"));
@@ -118,14 +126,21 @@ public class Login extends Activity {
                             UserPublic.setUser_n(map.get("NickName"));
                             user_public.setUser_level(map.get("Level"));
                             UserPublic.setUser_level(map.get("Level"));
-                            isSuccess=true;
+                            if("500".equals(map.get("code"))) {
+                                isSuccess = false;
+                            }else if("200".equals(map.get("code"))){
+                                isSuccess = true;
+                            }
+
                             Log.e("yjq1", "编码:" + map.get("code") + map.get("message" + map.get("token")));
                         }
 
                         @Override
                         public void onError(Throwable ex, boolean isOnCallback) {
                             Log.e("yjq1", "失败");
-                            Toast.makeText(Login.this, "连接超时，请查看网络连接", Toast.LENGTH_SHORT).show();
+                            refreshDialog.dismiss();
+                            Refresh_status=Refresh_Fail;
+                            Toast.makeText(Login.this, "登录失败，网络连接超时！", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -136,18 +151,20 @@ public class Login extends Activity {
                         @Override
                         public void onFinished() {
                             Log.e("yjq", "完成");
+
                             user_public.setFirst(false);  //是从登入去的，不需要更新长连接
                             UserPublic.setFirst(false);
                             if(isSuccess){
-                             Intent intent = new Intent(Login.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                                refreshDialog.dismiss();
+                                Refresh_status=Refresh_Success;
+                                Intent intent = new Intent(Login.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
                             }else{
+                                refreshDialog.dismiss();
+                                Refresh_status=Refresh_Success;
                                 Toast.makeText(Login.this, "账号密码错误", Toast.LENGTH_SHORT).show();
                             }
-//                            Intent intent = new Intent(Login.this, MainActivity.class);
-//                            startActivity(intent);
-//                            finish();
                         }
                     });
 //                    RequestParams params = new RequestParams(Web_url.URL_Login);
@@ -229,8 +246,39 @@ public class Login extends Activity {
 
 
     public void onClick(View view){
-        Intent intent = new Intent(Login.this,Register.class);
-        startActivity(intent);
-        finish();
+        switch (view.getId()){
+            case R.id.tv_register:
+                Intent intent = new Intent(Login.this,Register.class);
+                startActivity(intent);
+                finish();
+                break;
+//            case R.id.tv_country:
+//                break;
+//            case R.id.btn_register:
+//
+//                break;
+            default:
+        }
+    }
+
+    private void refreshContent() {
+        refreshDialog = new RefreshDialog(Login.this,"正在加载...",R.mipmap.ic_dialog_loading);
+        refreshDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //http();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ((Activity)Login.this).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //在之中可以终止线程
+                    }
+                });
+            }
+        }).start();
     }
 }
