@@ -100,7 +100,9 @@
         <activity android:name=".Ballculb.Payfaceture" />
         <activity android:name=".Index.main_stadiums" />
         <activity android:name=".Index.BaiduMap.Stadium_location_show" />
-        <activity android:name=".Index.fragmenttwo_fourballs.fragmenttwo_balls_details"></activity>
+        <activity android:name=".Index.fragmenttwo_fourballs.fragmenttwo_balls_details" />
+        <activity android:name=".Index.fragmenttwo_fourballs.Fragmenttwo_balls_commit"/>
+
     </application>
 
 </manifest>

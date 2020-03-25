@@ -212,6 +212,7 @@ public class fragmenttwo_balls_details extends Activity {
 
             //个人报名
             case R.id.ll_competition_buy:
+
                 Toast.makeText(fragmenttwo_balls_details.this, "个人报名", Toast.LENGTH_SHORT).show();
                 try{
                     jsonObject=new JSONObject();
@@ -226,6 +227,9 @@ public class fragmenttwo_balls_details extends Activity {
                 }
                 refreshContent(Web_url.URL_AddJoinGame,jsonObject);
                 //http(Web_url.URL_AddJoinGame,jsonObject); //网络请求
+                Intent intent=new Intent(fragmenttwo_balls_details.this, Fragmenttwo_balls_commit.class);
+                startActivity(intent);
+                this.finish();
                 break;
 
             //组团报名
