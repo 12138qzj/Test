@@ -65,6 +65,7 @@ public class fragmenttwo_info_adapter extends BaseAdapter {
                     //界面跳转
                     Intent intent_detail = new Intent(mContext,fragmenttwo_balls_details.class);
                     intent_detail.putExtra("gamedetailsid",mData.get(position).getGamedetailsid());
+                    intent_detail.putExtra("title",mData.get(position).getTv_title());
                    // intent_detail.putExtra("phone",mData.get(position).getPhone());
                     mContext.startActivity(intent_detail);
                     if (Activity.class.isInstance(mContext)) {

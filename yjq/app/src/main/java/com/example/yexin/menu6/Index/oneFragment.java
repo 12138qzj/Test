@@ -266,7 +266,7 @@ public class oneFragment extends android.support.v4.app.Fragment implements OnBa
 
                 // 这里是主线程
                 // 一些比较耗时的操作，比如联网获取数据，需要放到子线程去执行
-                // TODO 获取数据
+
                 //final Random random = new Random();
                 new Handler().postDelayed(new Runnable() {
                     @Override

@@ -48,6 +48,7 @@ public class fragmenttwo_balls_details extends Activity {
     private TextView tv_competition_announce_time;
     private TextView tv_competition_note;
     private String gamedetailsid;
+    private String title;
     private String phone;
     private JSONArray jsonArr;
     private JSONObject jsonObject=null;
@@ -63,7 +64,7 @@ public class fragmenttwo_balls_details extends Activity {
         setContentView(R.layout.fragmenttwo_balls_details);
         Intent intent =getIntent();
         gamedetailsid=intent.getStringExtra("gamedetailsid");
-
+        title=intent.getStringExtra("title");
         Log.e("gamedetailsid",gamedetailsid);
         if(gamedetailsid!=null){
             try{
@@ -217,19 +218,22 @@ public class fragmenttwo_balls_details extends Activity {
                 try{
                     jsonObject=new JSONObject();
                     /*添加报名信息*/
+                    Log.e("报名信息","phone:"+UserPublic.getUser()+"palce:"+tv_competition_place.getText()+"title:"+title);
                     jsonObject.put("userPhone", UserPublic.getUser());
                     jsonObject.put("userName","邱在杰");
-                    jsonObject.put("gamePlace","比赛地方");
-                    jsonObject.put("gameName","比赛名字");
+                    jsonObject.put("gamePlace",tv_competition_place.getText().toString().substring(5,tv_competition_place.getText().length()));
+                    jsonObject.put("gameName",title);
                     jsonObject.put("gameType","比赛类型");
                 }catch(Exception e){
                     e.printStackTrace();
                 }
                 refreshContent(Web_url.URL_AddJoinGame,jsonObject);
+
+
                 //http(Web_url.URL_AddJoinGame,jsonObject); //网络请求
                 Intent intent=new Intent(fragmenttwo_balls_details.this, Fragmenttwo_balls_commit.class);
+                intent.putExtra("jsonData",jsonObject.toString());
                 startActivity(intent);
-                this.finish();
                 break;
 
             //组团报名

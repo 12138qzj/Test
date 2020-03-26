@@ -9,13 +9,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -58,12 +64,18 @@ public class main_stadiums extends Activity implements OnBannerListener {
     private ListView list_ballsselect,list_user_evalutes;
     private TextView ballclub_name1,address,distance,facility,server;
     private ImageView iv_stadium_location,iv_stadium_phone,ball_collect,back;
+    private Button btn_day1,btn_day2,btn_day3;
 
 
     private int positionInt;
     private String phone;
 
     private SwipeRefreshLayout swipeRefreshView;
+
+//    private android.support.v4.app.Fragment[] mFragmentArrays = new android.support.v4.app.Fragment[3];
+//    private String[] mTabTitles = new String[3];
+//    private TabLayout tabLayout = null;
+//    private ViewPager viewPager;
 
 
     @Override
@@ -225,6 +237,18 @@ public class main_stadiums extends Activity implements OnBannerListener {
 
 
     }
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.btn_day1:
+                btn_day1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                break;
+            case R.id.btn_day2:
+                break;
+            case R.id.btn_day3:
+                break;
+        }
+    }
+
 
     private void pulldownRefresh() {
         swipeRefreshView.setRefreshing(false);
@@ -269,6 +293,13 @@ public class main_stadiums extends Activity implements OnBannerListener {
         list_ballsselect=(ListView)findViewById(R.id.list_ballsselect);
         list_user_evalutes=(ListView)findViewById(R.id.list_user_evalutes);
 
+        btn_day1=(Button)findViewById(R.id.btn_day1);
+        btn_day2=(Button)findViewById(R.id.btn_day2);
+        btn_day3=(Button)findViewById(R.id.btn_day3);
+
+//        tabLayout = (TabLayout)findViewById(R.id.tablayout);
+//        viewPager = (ViewPager)findViewById(R.id.tab_viewpager);
+
         ballclub_name1=(TextView)findViewById(R.id.tv_ballclub_name1);
         address=(TextView)findViewById(R.id.tv_address);
         distance=(TextView)findViewById(R.id.tv_distance);
@@ -288,6 +319,46 @@ public class main_stadiums extends Activity implements OnBannerListener {
         imagePath.add(R.drawable.banner2);
         imagePath.add(R.drawable.banner3);
     }
+
+//    private void initDate_tab(){
+//        mTabTitles[0] = "今天";
+//        mTabTitles[1] = "明天";
+//        mTabTitles[2] = "后天";
+//        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+//        mFragmentArrays[0] = TabFragment.newInstance();
+//        mFragmentArrays[1] = TabFragment.newInstance();
+//        mFragmentArrays[2] = TabFragment.newInstance();
+//
+//        PagerAdapter pagerAdapter=new MyViewPagerAdapter(getFragmentManager());
+//        viewPager.setAdapter(pagerAdapter);
+//        //将ViewPager和TabLayout绑定
+//        tabLayout.setupWithViewPager(viewPager);
+//    }
+//    final class MyViewPagerAdapter extends FragmentPagerAdapter {
+//
+//        public MyViewPagerAdapter(FragmentManager fm) {
+//            super(fm);
+//        }
+//
+//        @Override
+//        public android.support.v4.app.Fragment getItem(int position) {
+//            return mFragmentArrays[position];
+//        }
+//
+//
+//        @Override
+//        public int getCount() {
+//            return mFragmentArrays.length;
+//        }
+//
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            return mTabTitles[position];
+//
+//        }
+//
+//    }
+
     @Override
     public void OnBannerClick(int position) {
         /*图片监听器*/
