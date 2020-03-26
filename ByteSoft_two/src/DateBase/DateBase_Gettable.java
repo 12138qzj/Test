@@ -1,5 +1,7 @@
 package DateBase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -102,6 +104,41 @@ public class DateBase_Gettable {
 				System.out.println("订单类型:"+gorder.getOclass());	
 				System.out.println("订单金额:"+gorder.getOmony());
 				
+				Date date=new Date();
+				date=(Date)gorder.getOendAppointmenttime();
+			
+				try {
+					System.out.println("数据库中时间："+date.getTime());
+				}catch (Exception e) {
+					System.out.println("报错");
+					e.printStackTrace();
+				}
+				
+				//获取当前时间
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// HH:mm:ss		        
+			    Date dateSystem = new Date(System.currentTimeMillis());
+			    //simpleDateFormat.format(dateSystem);
+			    try {
+					System.out.println("系统中时间："+dateSystem.getTime());
+				}catch (Exception e) {
+					
+					e.printStackTrace();
+				}
+			      
+			    System.out.println("系统时间："+simpleDateFormat.format(dateSystem));
+				if(date.getTime()<=dateSystem.getTime()) {
+					System.out.println("系统时间大执行continue");
+					if(DataBase_Altertable.DelectGorder(gorder.getOid())) {
+						System.out.println("删除gorder成功！");
+					}
+					continue;
+				}
+				if(date.getTime()>dateSystem.getTime()) {
+					System.out.println("系统时间小执行continue");
+
+				}		
+				//continue;
+				
 				JSONObject jsonObj = new JSONObject();
 				
 				
@@ -109,7 +146,8 @@ public class DateBase_Gettable {
 				jsonObj.put("no",gorder.getOno());
 		        jsonObj.put("time",gorder.getOtime());
 		        jsonObj.put("type",gorder.getOclass());
-		        jsonObj.put("appointmenttime", gorder.getOappointment().toString());
+		        jsonObj.put("appointmenttime", gorder.getOappointmenttime().toString());
+		        jsonObj.put("endappointmenttime", gorder.getOendAppointmenttime().toString());
 		        jsonObj.put("site",gorder.getOsite());//地点  位置
 		        jsonObj.put("money",gorder.getOmony());
 		        jsonObj.put("pay",gorder.getOpay()); 

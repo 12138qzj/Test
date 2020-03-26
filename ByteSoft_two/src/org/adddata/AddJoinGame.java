@@ -38,17 +38,20 @@ public class AddJoinGame implements Controller {
 			System.out.println("---POST方法进入---");
 			if(json!=null) {
 				DateBase_Addtable Addtable=new DateBase_Addtable();	
-				Boolean result=Addtable.AddJoinGame(json);
-				if(result) {
+				int result=Addtable.AddJoinGame(json);
+				if(result==1) {
 					System.out.println("添加成功");
-					response.getWriter().append("数据添加成功");
-				}else {
+					response.getWriter().append("SUCCEED");
+				}else if(result==0){
 					System.out.println("添加失败");
-					response.getWriter().append("数据错误");
+					response.getWriter().append("EXIST");
+				}else if(result==2) {
+					System.out.println("添加失败");
+					response.getWriter().append("ERROR");
 				}
 			}
 			else {
-				response.getWriter().append("数据错误");
+				response.getWriter().append("ERROR");
 			}
 		}else {
 			System.out.println("---GET方法进入---");

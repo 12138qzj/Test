@@ -17,6 +17,7 @@ import org.table.Gorder;
 import org.table.Joingame;
 import org.table.Login;
 import org.table.Userinfo;
+import java.util.Date;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -29,7 +30,7 @@ public class DateBase_Addtable {
 		Gorder gorder=new Gorder();
 		
 		Session session=HibernateSessionFactory.getSession();		
-		System.out.println("在这1");
+		System.out.println("在这1AddGorder");
 		try {			
 			session.clear();
 			Transaction tran=session.beginTransaction();
@@ -42,12 +43,23 @@ public class DateBase_Addtable {
 			gorder.setOpay(jsondate.getString("pay"));
 			
 		
+	
 			
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Timestamp ts = new Timestamp(format.parse(jsondate.getString("appointment")).getTime());
-			System.out.println(ts);
+			
+			DateFormat formatreserver = new SimpleDateFormat("yyyy-MM-dd");
+			Timestamp Nowtime = new Timestamp(formatreserver.parse(jsondate.getString("appointment")).getTime());
+			System.out.println("开始时间2："+Nowtime);
 
-			gorder.setOappointment(ts);
+			
+		    DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+			if(jsondate.getString("pay").equals("0")) {	
+				Timestamp Endtime = new Timestamp(format.parse(jsondate.getString("endappointment")).getTime());
+				gorder.setOendAppointmenttime(Endtime);	
+				System.out.println("开始时间1："+Nowtime+"结束时间1："+Endtime);
+			}
+			gorder.setOappointmenttime(Nowtime);
+			
 			gorder.setOsite(jsondate.getString("site"));
 			gorder.setOmony(Float.parseFloat(jsondate.getString("money")));
 			
@@ -69,7 +81,7 @@ public class DateBase_Addtable {
 					System.out.println("修改ABC中的数据失败");
 				}
 				//删除
-			}			
+			}
 		}catch(Exception e){
 			System.out.println(e);
 			return false;
@@ -149,7 +161,7 @@ public Boolean AddCollection(JSONObject jsondate) {
 		}
 	}
 	
-	public Boolean AddJoinGame(JSONObject jsondate) {
+	public int AddJoinGame(JSONObject jsondate) {
 		Session session=HibernateSessionFactory.getSession();		
 		System.out.println("在这1修改Joingame");		
 		session.clear();
@@ -164,7 +176,7 @@ public Boolean AddCollection(JSONObject jsondate) {
 			System.out.println("存在");
 			tran.commit();
 			session.close();
-			return false;			
+			return 0;			
 		}else {	
 			try {			
 				Joingame joingame=null;
@@ -183,10 +195,10 @@ public Boolean AddCollection(JSONObject jsondate) {
 			}catch(Exception e){
 				System.out.println(e);
 				System.out.println("在这1添加joingame失败");
-				return false;				
+				return 2;				
 			}
 			System.out.println("在这1添加joingame成功");
-			return true;
+			return 1;
 		}
 		
 	}

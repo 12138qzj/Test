@@ -150,5 +150,31 @@ public class DataBase_Altertable {
 		
 	return true;
 	}
+	
+	public  static Boolean DelectGorder(int id) {
+		Session session=HibernateSessionFactory.getSession();		
+		System.out.println("在这DataBase中修改(删除)gorder");		
+		session.clear();
+		Transaction tran=session.beginTransaction();
+		Gorder gorder=new Gorder();
+		
+		try {
+			String hql = "Delete FROM gorder Where Oid=? ";
+			System.out.println("hql:"+hql);
+			int i = session.createSQLQuery(hql)
+				.setParameter(0, id)
+				.executeUpdate();				
+			System.out.println(i);
+			
+			tran.commit();
+			session.close();	
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+			}
+		System.out.println("在这1删除gorder成功");
+		return true;
+
+	}
 
 }
