@@ -132,7 +132,7 @@
                     android:padding="10dp"
                     android:background="@color/white"
                     android:textColor="@color/theme_gray"
-                    android:onClick="onClick"
+
                     android:text="今天" />
 
                 <Button
@@ -144,7 +144,7 @@
                     android:padding="10dp"
                     android:background="@color/white"
                     android:textColor="@color/theme_gray"
-                    android:onClick="onClick"
+
                     android:text="明天" />
 
                 <Button
@@ -156,7 +156,7 @@
                     android:padding="10dp"
                     android:background="@color/white"
                     android:textColor="@color/theme_gray"
-                    android:onClick="onClick"
+
                     android:text="后天" />
             </LinearLayout>
             //球馆包含的球类

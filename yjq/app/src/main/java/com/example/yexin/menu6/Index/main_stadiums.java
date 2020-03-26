@@ -68,6 +68,7 @@ public class main_stadiums extends Activity implements OnBannerListener {
 
 
     private int positionInt;
+    public static int TimeStatus;
     private String phone;
 
     private SwipeRefreshLayout swipeRefreshView;
@@ -83,6 +84,7 @@ public class main_stadiums extends Activity implements OnBannerListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_stadiums);
         mContext=main_stadiums.this;
+
 
         init();//初始化变量
 
@@ -233,20 +235,39 @@ public class main_stadiums extends Activity implements OnBannerListener {
             }
         });
 
-
-
-
-    }
-    public void onClick(View view){
-        switch (view.getId()){
-            case R.id.btn_day1:
-                btn_day1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                break;
-            case R.id.btn_day2:
-                break;
-            case R.id.btn_day3:
-                break;
-        }
+        btn_day1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    btn_day1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    TimeStatus=0;//今天
+                }else{
+                    btn_day1.setBackgroundColor(getResources().getColor(R.color.white));
+                }
+            }
+        });
+        btn_day2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    btn_day2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    TimeStatus=1;//明天
+                }else{
+                    btn_day2.setBackgroundColor(getResources().getColor(R.color.white));
+                }
+            }
+        });
+        btn_day3.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    btn_day3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    TimeStatus=3;//后天
+                }else{
+                    btn_day3.setBackgroundColor(getResources().getColor(R.color.white));
+                }
+            }
+        });
     }
 
 
@@ -296,6 +317,9 @@ public class main_stadiums extends Activity implements OnBannerListener {
         btn_day1=(Button)findViewById(R.id.btn_day1);
         btn_day2=(Button)findViewById(R.id.btn_day2);
         btn_day3=(Button)findViewById(R.id.btn_day3);
+        btn_day1.setFocusableInTouchMode(true);
+        btn_day2.setFocusableInTouchMode(true);
+        btn_day3.setFocusableInTouchMode(true);
 
 //        tabLayout = (TabLayout)findViewById(R.id.tablayout);
 //        viewPager = (ViewPager)findViewById(R.id.tab_viewpager);
@@ -319,45 +343,6 @@ public class main_stadiums extends Activity implements OnBannerListener {
         imagePath.add(R.drawable.banner2);
         imagePath.add(R.drawable.banner3);
     }
-
-//    private void initDate_tab(){
-//        mTabTitles[0] = "今天";
-//        mTabTitles[1] = "明天";
-//        mTabTitles[2] = "后天";
-//        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-//        mFragmentArrays[0] = TabFragment.newInstance();
-//        mFragmentArrays[1] = TabFragment.newInstance();
-//        mFragmentArrays[2] = TabFragment.newInstance();
-//
-//        PagerAdapter pagerAdapter=new MyViewPagerAdapter(getFragmentManager());
-//        viewPager.setAdapter(pagerAdapter);
-//        //将ViewPager和TabLayout绑定
-//        tabLayout.setupWithViewPager(viewPager);
-//    }
-//    final class MyViewPagerAdapter extends FragmentPagerAdapter {
-//
-//        public MyViewPagerAdapter(FragmentManager fm) {
-//            super(fm);
-//        }
-//
-//        @Override
-//        public android.support.v4.app.Fragment getItem(int position) {
-//            return mFragmentArrays[position];
-//        }
-//
-//
-//        @Override
-//        public int getCount() {
-//            return mFragmentArrays.length;
-//        }
-//
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            return mTabTitles[position];
-//
-//        }
-//
-//    }
 
     @Override
     public void OnBannerClick(int position) {
