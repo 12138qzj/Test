@@ -25,8 +25,8 @@
         <property name="oclass" type="java.lang.String">
             <column name="OClass" length="1" not-null="true" />
         </property>
-        <property name="oappointmenttime" type="java.sql.Timestamp">
-            <column name="OAppointmenttime" length="19" not-null="true" />
+        <property name="oappointmenttime" type="java.util.Date">
+            <column name="OAppointmenttime" length="10" not-null="true" />
         </property>
         <property name="oendAppointmenttime" type="java.sql.Timestamp">
             <column name="OendAppointmenttime" length="19" />

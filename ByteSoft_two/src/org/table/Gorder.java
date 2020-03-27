@@ -1,6 +1,7 @@
 package org.table;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Gorder entity. @author MyEclipse Persistence Tools
@@ -16,7 +17,7 @@ public class Gorder implements java.io.Serializable {
 	private String oplace;
 	private String otime;
 	private String oclass;
-	private Timestamp oappointmenttime;
+	private Date oappointmenttime;
 	private Timestamp oendAppointmenttime;
 	private String osite;
 	private Float omony;
@@ -29,7 +30,7 @@ public class Gorder implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Gorder(String ouserId, String ono, String oplace, String otime, String oclass, Timestamp oappointmenttime,
+	public Gorder(String ouserId, String ono, String oplace, String otime, String oclass, Date oappointmenttime,
 			String osite, Float omony, String opay) {
 		this.ouserId = ouserId;
 		this.ono = ono;
@@ -43,7 +44,7 @@ public class Gorder implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Gorder(String ouserId, String ono, String oplace, String otime, String oclass, Timestamp oappointmenttime,
+	public Gorder(String ouserId, String ono, String oplace, String otime, String oclass, Date oappointmenttime,
 			Timestamp oendAppointmenttime, String osite, Float omony, String opay) {
 		this.ouserId = ouserId;
 		this.ono = ono;
@@ -107,11 +108,11 @@ public class Gorder implements java.io.Serializable {
 		this.oclass = oclass;
 	}
 
-	public Timestamp getOappointmenttime() {
+	public Date getOappointmenttime() {
 		return this.oappointmenttime;
 	}
 
-	public void setOappointmenttime(Timestamp oappointmenttime) {
+	public void setOappointmenttime(Date oappointmenttime) {
 		this.oappointmenttime = oappointmenttime;
 	}
 

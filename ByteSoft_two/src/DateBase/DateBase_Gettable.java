@@ -146,7 +146,7 @@ public class DateBase_Gettable {
 				jsonObj.put("no",gorder.getOno());
 		        jsonObj.put("time",gorder.getOtime());
 		        jsonObj.put("type",gorder.getOclass());
-		        jsonObj.put("appointmenttime", gorder.getOappointmenttime().toString());
+		        jsonObj.put("appointmenttime", gorder.getOappointmenttime().toString().substring(0, 10));
 		        jsonObj.put("endappointmenttime", gorder.getOendAppointmenttime().toString());
 		        jsonObj.put("site",gorder.getOsite());//µÿµ„  Œª÷√
 		        jsonObj.put("money",gorder.getOmony());

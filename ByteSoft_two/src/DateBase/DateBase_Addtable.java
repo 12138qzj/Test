@@ -41,15 +41,11 @@ public class DateBase_Addtable {
 			gorder.setOtime(jsondate.getString("time"));
 			gorder.setOclass(jsondate.getString("Class"));
 			gorder.setOpay(jsondate.getString("pay"));
-			
-		
-	
-			
-			
+
 			DateFormat formatreserver = new SimpleDateFormat("yyyy-MM-dd");
 			Timestamp Nowtime = new Timestamp(formatreserver.parse(jsondate.getString("appointment")).getTime());
 			System.out.println("开始时间2："+Nowtime);
-
+			gorder.setOappointmenttime(Nowtime);
 			
 		    DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -57,8 +53,9 @@ public class DateBase_Addtable {
 				Timestamp Endtime = new Timestamp(format.parse(jsondate.getString("endappointment")).getTime());
 				gorder.setOendAppointmenttime(Endtime);	
 				System.out.println("开始时间1："+Nowtime+"结束时间1："+Endtime);
+							
 			}
-			gorder.setOappointmenttime(Nowtime);
+			
 			
 			gorder.setOsite(jsondate.getString("site"));
 			gorder.setOmony(Float.parseFloat(jsondate.getString("money")));
