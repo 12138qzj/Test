@@ -189,6 +189,8 @@ public class main_stadiums extends Activity implements OnBannerListener {
                 //获取用户id  球馆id mDatainformation.get(positionInt).getNo()，球馆名mDatainformation.get(positionInt).getBallclub_name()
                 //加入到数据库表中去
                 //每次点击 状态为 收藏/不收藏
+                //if()
+                ball_collect.setImageDrawable (getResources().getDrawable(R.drawable.likeis));
                 Toast.makeText(main_stadiums.this,"收藏"+mDatainformation.get(positionInt).getNo()+" "+
                         mDatainformation.get(positionInt).getBallclub_name(),Toast.LENGTH_SHORT).show();
 
@@ -262,7 +264,7 @@ public class main_stadiums extends Activity implements OnBannerListener {
             public void onFocusChange(View view, boolean b) {
                 if(b){
                     btn_day3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    TimeStatus=3;//后天
+                    TimeStatus=2;//后天
                 }else{
                     btn_day3.setBackgroundColor(getResources().getColor(R.color.white));
                 }

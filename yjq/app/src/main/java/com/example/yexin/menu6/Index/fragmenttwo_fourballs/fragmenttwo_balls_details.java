@@ -223,7 +223,7 @@ public class fragmenttwo_balls_details extends Activity {
                     jsonObject.put("userName","邱在杰");
                     jsonObject.put("gamePlace",tv_competition_place.getText().toString().substring(5,tv_competition_place.getText().length()));
                     jsonObject.put("gameName",title);
-                    jsonObject.put("gameType","比赛类型");
+                    jsonObject.put("gameType",tv_competition_note.getText().toString().substring(5,tv_competition_note.getText().length()));
                 }catch(Exception e){
                     e.printStackTrace();
                 }

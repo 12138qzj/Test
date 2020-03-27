@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;//下拉选择框
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,8 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.util.ArrayList;
+
 public class Fragmenttwo_balls_commit extends Activity {
     private JSONObject jsonObject=null;
     private ImageView iv_back;
@@ -31,7 +36,7 @@ public class Fragmenttwo_balls_commit extends Activity {
     private EditText et_phone;
     private EditText et_game_name;
     private TextView tv_place;
-    private EditText et_game_type;
+    private Spinner spinner_game_type;
     private Button btn_commmit;
 
     private RefreshDialog refreshDialog;
@@ -46,10 +51,17 @@ public class Fragmenttwo_balls_commit extends Activity {
         try{
             jsonObject=new JSONObject(intent.getStringExtra("jsonData"));
             Log.e("jsonData",jsonObject.toString());
+
         }catch(Exception e){
             e.printStackTrace();
         }
         init();
+        try{
+            String type[]=jsonObject.getString("gameType").split("，");
+            spinner(type);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
 
     }
@@ -59,7 +71,7 @@ public class Fragmenttwo_balls_commit extends Activity {
         et_phone=(EditText) findViewById(R.id.et_phone);
         et_game_name=(EditText)findViewById(R.id.et_game_name);
         tv_place=(TextView)findViewById(R.id.tv_place);
-        et_game_type=(EditText)findViewById(R.id.et_game_type);
+        spinner_game_type=(Spinner) findViewById(R.id.spinner_game_type);
         btn_commmit=(Button)findViewById(R.id.btn_commit);
         try{
             et_phone.setText(jsonObject.getString("userPhone"));
@@ -105,7 +117,7 @@ public class Fragmenttwo_balls_commit extends Activity {
                }else if(tv_place.getText().toString().isEmpty()){
                    Toast.makeText(Fragmenttwo_balls_commit.this,"参赛地不能为空！",Toast.LENGTH_SHORT).show();
                    break;
-               }else if(et_game_type.getText().toString().isEmpty()){
+               }else if(spinner_game_type.getSelectedItem().toString().isEmpty()){
                    Toast.makeText(Fragmenttwo_balls_commit.this,"参赛类型不能为空！",Toast.LENGTH_SHORT).show();
                    break;
                }else{
@@ -114,7 +126,7 @@ public class Fragmenttwo_balls_commit extends Activity {
                        jsonObject.put("userPhone",et_phone.getText());
                        jsonObject.put("gameName",et_game_name.getText());
                        jsonObject.put("gamePlace",tv_place.getText());
-                       jsonObject.put("gameType",et_game_type.getText());
+                       jsonObject.put("gameType",spinner_game_type.getSelectedItem().toString());
                    }catch(Exception e){
                        e.printStackTrace();
                    }
@@ -191,6 +203,29 @@ public class Fragmenttwo_balls_commit extends Activity {
                 });
             }
         }).start();
+    }
+    private void spinner(String type[]){
+        ArrayList<String> list = new ArrayList<String>();
+        if(type.length>0){
+            for(int i=0;i<type.length;i++){
+                Log.e("type","type:"+type[i]);
+                list.add(type[i]);
+            }
+        }
+
+        //为下拉列表定义一个适配器
+        final ArrayAdapter<String> ad = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, list);
+        //设置下拉菜单样式。
+        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //添加数据
+        spinner_game_type.setAdapter(ad);
+        //点击响应事件
+        spinner_game_type.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            }
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
     }
 
 }

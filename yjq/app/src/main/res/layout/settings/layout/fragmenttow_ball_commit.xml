@@ -140,19 +140,33 @@
         android:layout_height="60dp"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
-        <EditText
-            android:id="@+id/et_game_type"
-            android:layout_width="match_parent"
+        <!--<EditText-->
+            <!--android:id="@+id/et_game_type"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:paddingTop="2dp"-->
+            <!--android:paddingBottom="2dp"-->
+            <!--android:paddingLeft="6dp"-->
+            <!--android:hint="比赛类型"-->
+            <!--android:maxLength="15"-->
+            <!--android:background="#ffffff"-->
+            <!--android:textSize="18sp" />-->
+
+        <Spinner
+            android:id = "@+id/spinner_game_type"
+            android:spinnerMode="dialog"
+            android:layout_width = "match_parent"
+            android:background="#ffffff"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
             android:paddingLeft="6dp"
-            android:hint="比赛类型"
-            android:maxLength="15"
-            android:background="#ffffff"
-            android:textSize="18sp" />
+            android:textSize="18sp">
+        </Spinner >
     </LinearLayout>
 
 </LinearLayout>
